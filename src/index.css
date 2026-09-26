@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  cursor: none !important;
+}
+
+input, textarea, [contenteditable="true"] {
+  cursor: text !important;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.glow-icon {
+  filter: drop-shadow(0 0 8px #00F700);
+  animation: pulse-glow 2s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { filter: drop-shadow(0 0 4px #00F700); opacity: 0.8; }
+  100% { filter: drop-shadow(0 0 12px #00F700); opacity: 1; }
+}

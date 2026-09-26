@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="nvGradientLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F700" />
+      <stop offset="100%" stop-color="#008f00" />
+    </linearGradient>
+    <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <style>
+      @keyframes terminalBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      .terminal-cursor {
+        animation: terminalBlink 1s infinite;
+      }
+    </style>
+  </defs>
+
+  <rect x="10" y="10" width="100" height="100" rx="16" fill="#121212" stroke="#2a2a2a" stroke-width="2" />
+
+  <g filter="url(#logoGlow)">
+    <path d="M 28 36 L 28 84" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />
+    <path d="M 28 36 L 52 84" fill="none" stroke="url(#nvGradientLogo)" stroke-width="6" stroke-linecap="round" />
+    <path d="M 52 84 L 52 36" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />
+    <path d="M 52 84 L 76 36" fill="none" stroke="url(#nvGradientLogo)" stroke-width="6" stroke-linecap="round" />
+  </g>
+  
+  <rect x="80" y="74" width="7" height="10" fill="#00F700" filter="url(#logoGlow)" class="terminal-cursor" />
+</svg>
