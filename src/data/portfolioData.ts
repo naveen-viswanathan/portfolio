@@ -11,8 +11,7 @@ export const DATA = {
       company: "CSG Systems International",
       role: "Senior Software Development Engineer",
       period: "May 2019 - Present",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/f/f4/CSG_Logo.png",
-      project: "CSG Ascendon Invision",
+      logo: `${process.env.PUBLIC_URL}/logos/csg.png`,
       description: "Frontend development for CSG Ascendon Invision, a cloud-based digital monetization and business support platform for telecom, media, and service providers. Worked across applications including Studio, Rating & Charging, and Customer Care UI.",
       bullets: [
         "Started on the AngularJS version of the platform and contributed to feature development, UI engineering, bug fixing, testing, and ongoing modernization.",
@@ -30,8 +29,8 @@ export const DATA = {
       company: "Wipro",
       role: "Project Engineer",
       period: "December 2014 - May 2019",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg",
-      clientLogo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg",
+      logo: `${process.env.PUBLIC_URL}/logos/wipro.svg`,
+      clientLogo: `${process.env.PUBLIC_URL}/logos/cisco.svg`,
       client: "Cisco",
       description: "Worked on Cisco web applications focused on network configuration and management, with responsibilities across UI development, feature implementation, testing, maintenance, defect fixes, and performance improvements.",
       bullets: [

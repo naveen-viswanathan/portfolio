@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         dark: '#121212',
         light: '#F2F2F2',
-        accent: '#00F700'
+        accent: 'var(--accent-color)'
       }
     },
   },

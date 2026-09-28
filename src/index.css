@@ -18,11 +18,12 @@ body {
 }
 
 :root {
-  --accent-color: #cb3131; /* Light mode red */
+  --accent-color: #cb3131; /* Light mode default fallback */
 }
 
-:root.dark {
-  --accent-color: #00f700; /* Dark mode green */
+:root.dark,
+html.dark {
+  --accent-color: #00f700; /* Dark mode default fallback */
 }
 
 .glow-icon {
@@ -49,12 +50,4 @@ body {
   .max-w-6xl {
     max-width: 104rem !important;
   }
-}
-
-:root {
-  --accent-color: #cb3131;
-}
-
-:root.dark {
-  --accent-color: #00f700;
 }

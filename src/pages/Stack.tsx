@@ -7,9 +7,12 @@ import {
   Database,
 } from "lucide-react";
 import React from "react";
+import { getTheme } from "../theme/theme";
 
 export default function Stack({ theme }: { theme: string }) {
   const isDark = theme === "dark";
+  const themeColors = getTheme(theme);
+
   const STACK_DATA = {
     Frontend: {
       icon: <Globe className="w-4 h-4" />,
@@ -80,7 +83,10 @@ export default function Stack({ theme }: { theme: string }) {
 
   return (
     <div className="animate-fade-in py-10 max-w-5xl">
-      <h2 className="text-2xl font-mono mb-10 pb-2 border-b border-current opacity-80 uppercase tracking-widest ${theme === 'dark' ? 'text-[#00F700]' : 'text-[#cb3131]'}`">
+      <h2
+        className="text-2xl font-mono mb-10 pb-2 border-b border-current opacity-80 uppercase tracking-widest"
+        style={{ color: themeColors.accent }}
+      >
         / Tech Stack Directory
       </h2>
 
@@ -88,7 +94,11 @@ export default function Stack({ theme }: { theme: string }) {
         {Object.entries(STACK_DATA).map(([category, data], idx) => (
           <div
             key={idx}
-            className={`p-6 rounded border border-current border-opacity-10 transition-colors ${isDark ? "bg-white/[0.02] hover:bg-white/[0.04]" : "bg-black/[0.02] hover:bg-black/[0.04]"}`}
+            className={`p-6 rounded border border-current border-opacity-10 transition-colors ${
+              isDark
+                ? "bg-white/[0.02] hover:bg-white/[0.04]"
+                : "bg-black/[0.02] hover:bg-black/[0.04]"
+            }`}
           >
             <div className="flex items-center gap-3 mb-6 opacity-70">
               {data.icon}

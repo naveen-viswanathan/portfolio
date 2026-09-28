@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DATA } from "../data/portfolioData";
+import { getTheme } from "../theme/theme";
 
 export default function Home({ theme }: { theme: string }) {
   const [statusIndex, setStatusIndex] = useState(0);
   const [glitchState, setGlitchState] = useState<"normal" | "green" | "red">(
     "normal",
   );
+
+  const themeColors = getTheme(theme);
 
   useEffect(() => {
     const cycleTime = 3000;
@@ -32,12 +35,6 @@ export default function Home({ theme }: { theme: string }) {
   }, [statusIndex]);
 
   const currentStatus = DATA.profile.status[statusIndex];
-  const accentColor = theme === "dark" ? "#00F700" : "#cb3131";
-
-  const avatarShadowColor =
-    theme === "dark" ? "rgba(0,247,0,0.15)" : "rgba(203,49,49,0.6)";
-  const cardGlowColor =
-    theme === "dark" ? "rgba(0,247,0,0.08)" : "rgba(203,49,49,0.12)";
 
   return (
     <div
@@ -47,7 +44,7 @@ export default function Home({ theme }: { theme: string }) {
           : "bg-white border-gray-200"
       }`}
       style={{
-        boxShadow: `0 0 140px 0 ${cardGlowColor}`,
+        boxShadow: `0 0 140px 0 ${themeColors.glow.card}`,
       }}
     >
       {/* Profile Image */}
@@ -57,8 +54,8 @@ export default function Home({ theme }: { theme: string }) {
           alt="Profile"
           className="w-full h-full object-cover rounded-full border-4 md:border-[6px] transition-all duration-300"
           style={{
-            borderColor: accentColor,
-            filter: `drop-shadow(0 0 50px ${avatarShadowColor})`,
+            borderColor: themeColors.accent,
+            filter: `drop-shadow(0 0 50px ${themeColors.glow.avatar})`,
           }}
         />
       </div>
@@ -70,7 +67,9 @@ export default function Home({ theme }: { theme: string }) {
           {DATA.profile.name}
         </h1>
         <h2
-          className={`text-xl sm:text-2xl md:text-4xl font-light mb-6 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
+          className={`text-xl sm:text-2xl md:text-4xl font-light mb-6 ${
+            theme === "dark" ? "text-gray-400" : "text-gray-500"
+          }`}
         >
           {DATA.profile.title}
         </h2>
@@ -85,7 +84,7 @@ export default function Home({ theme }: { theme: string }) {
                   ? "bg-[#111] border-gray-800"
                   : "bg-gray-50 border-gray-200"
               }`}
-              style={{ color: accentColor }}
+              style={{ color: themeColors.accent }}
             >
               {item}
             </div>
@@ -107,20 +106,24 @@ export default function Home({ theme }: { theme: string }) {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{ color: accentColor }}
+                style={{ color: themeColors.accent }}
               >
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
               <h3
-                className={`text-sm md:text-base font-bold tracking-widest uppercase ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
+                className={`text-sm md:text-base font-bold tracking-widest uppercase ${
+                  theme === "dark" ? "text-gray-500" : "text-gray-400"
+                }`}
               >
                 Location
               </h3>
             </div>
 
             <p
-              className={`text-lg sm:text-xl md:text-3xl font-medium leading-tight ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}
+              className={`text-lg sm:text-xl md:text-3xl font-medium leading-tight ${
+                theme === "dark" ? "text-gray-200" : "text-gray-800"
+              }`}
             >
               {DATA.profile.location}
             </p>
@@ -138,7 +141,7 @@ export default function Home({ theme }: { theme: string }) {
                     {glitchState === "green" && (
                       <div
                         className="w-4 h-4 md:w-5 md:h-5 rounded-full"
-                        style={{ backgroundColor: accentColor }}
+                        style={{ backgroundColor: themeColors.accent }}
                       ></div>
                     )}
                     {glitchState === "red" && (
@@ -150,7 +153,9 @@ export default function Home({ theme }: { theme: string }) {
                 )}
               </div>
               <h3
-                className={`text-sm md:text-base font-bold tracking-widest uppercase ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
+                className={`text-sm md:text-base font-bold tracking-widest uppercase ${
+                  theme === "dark" ? "text-gray-500" : "text-gray-400"
+                }`}
               >
                 Status
               </h3>
@@ -159,7 +164,9 @@ export default function Home({ theme }: { theme: string }) {
             {/* Status text - centered on mobile, left on desktop */}
             <div className="w-[15rem] sm:w-[17rem] md:w-[28rem] text-center md:text-left overflow-visible min-h-[2rem] md:min-h-[3rem]">
               <span
-                className={`whitespace-nowrap text-base sm:text-lg md:text-3xl font-medium leading-tight block ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}
+                className={`whitespace-nowrap text-base sm:text-lg md:text-3xl font-medium leading-tight block ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-800"
+                }`}
               >
                 {currentStatus}
               </span>
@@ -172,7 +179,11 @@ export default function Home({ theme }: { theme: string }) {
           {/* LinkedIn */}
           <a
             href="#"
-            className={`p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all duration-300 ${theme === "dark" ? "bg-[#111] border-gray-800 hover:border-gray-600" : "bg-gray-50 border-gray-200 hover:border-gray-300"}`}
+            className={`p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all duration-300 ${
+              theme === "dark"
+                ? "bg-[#111] border-gray-800 hover:border-gray-600"
+                : "bg-gray-50 border-gray-200 hover:border-gray-300"
+            }`}
           >
             <svg
               width="22"
@@ -184,7 +195,7 @@ export default function Home({ theme }: { theme: string }) {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ color: accentColor }}
+              style={{ color: themeColors.accent }}
             >
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
               <rect x="2" y="9" width="4" height="12"></rect>
@@ -195,7 +206,11 @@ export default function Home({ theme }: { theme: string }) {
           {/* Gmail */}
           <a
             href="#"
-            className={`p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all duration-300 ${theme === "dark" ? "bg-[#111] border-gray-800 hover:border-gray-600" : "bg-gray-50 border-gray-200 hover:border-gray-300"}`}
+            className={`p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all duration-300 ${
+              theme === "dark"
+                ? "bg-[#111] border-gray-800 hover:border-gray-600"
+                : "bg-gray-50 border-gray-200 hover:border-gray-300"
+            }`}
           >
             <svg
               width="22"
@@ -207,7 +222,7 @@ export default function Home({ theme }: { theme: string }) {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ color: accentColor }}
+              style={{ color: themeColors.accent }}
             >
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
@@ -217,7 +232,11 @@ export default function Home({ theme }: { theme: string }) {
           {/* Instagram */}
           <a
             href="#"
-            className={`p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all duration-300 ${theme === "dark" ? "bg-[#111] border-gray-800 hover:border-gray-600" : "bg-gray-50 border-gray-200 hover:border-gray-300"}`}
+            className={`p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all duration-300 ${
+              theme === "dark"
+                ? "bg-[#111] border-gray-800 hover:border-gray-600"
+                : "bg-gray-50 border-gray-200 hover:border-gray-300"
+            }`}
           >
             <svg
               width="22"
@@ -229,7 +248,7 @@ export default function Home({ theme }: { theme: string }) {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ color: accentColor }}
+              style={{ color: themeColors.accent }}
             >
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
