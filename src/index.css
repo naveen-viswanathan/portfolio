@@ -6,7 +6,9 @@
   cursor: none !important;
 }
 
-input, textarea, [contenteditable="true"] {
+input,
+textarea,
+[contenteditable="true"] {
   cursor: text !important;
 }
 
@@ -15,12 +17,44 @@ body {
   overflow: hidden;
 }
 
+:root {
+  --accent-color: #cb3131; /* Light mode red */
+}
+
+:root.dark {
+  --accent-color: #00f700; /* Dark mode green */
+}
+
 .glow-icon {
-  filter: drop-shadow(0 0 8px #00F700);
+  filter: drop-shadow(0 0 8px var(--accent-color));
   animation: pulse-glow 2s infinite alternate;
 }
 
 @keyframes pulse-glow {
-  0% { filter: drop-shadow(0 0 4px #00F700); opacity: 0.8; }
-  100% { filter: drop-shadow(0 0 12px #00F700); opacity: 1; }
+  0% {
+    filter: drop-shadow(0 0 4px var(--accent-color));
+    opacity: 0.8;
+  }
+  100% {
+    filter: drop-shadow(0 0 12px var(--accent-color));
+    opacity: 1;
+  }
+}
+
+/* 
+  Override Tailwind's default max-w-6xl (which is 72rem) 
+  to 104rem for an ultra-wide layout across all sections 
+*/
+@layer utilities {
+  .max-w-6xl {
+    max-width: 104rem !important;
+  }
+}
+
+:root {
+  --accent-color: #cb3131;
+}
+
+:root.dark {
+  --accent-color: #00f700;
 }

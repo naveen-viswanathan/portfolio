@@ -1,36 +1,118 @@
-import React from 'react';
+import {
+  Globe,
+  FileCode2,
+  TestTube2,
+  Wrench,
+  ShieldCheck,
+  Database,
+} from "lucide-react";
+import React from "react";
 
 export default function Stack({ theme }: { theme: string }) {
-  const stackData = {
-    "Frontend": ["React 19", "TypeScript", "JavaScript", "HTML/CSS", "MUI", "Emotion"],
-    "Architecture": ["React Query", "Redux Toolkit", "Formik", "REST APIs", "Component Systems"],
-    "Tooling & Build": ["Webpack 5", "Yarn Workspaces", "Lerna", "Babel", "Git", "CI/CD"],
-    "Quality & Testing": ["Jest", "Testing Library", "Cypress", "Cucumber", "Storybook", "ESLint", "Husky"]
+  const isDark = theme === "dark";
+  const STACK_DATA = {
+    Frontend: {
+      icon: <Globe className="w-4 h-4" />,
+      items: [
+        "React 19",
+        "AngularJS 1.8",
+        "React Router 5",
+        "Redux",
+        "Redux Toolkit",
+        "React Query",
+        "UI-Router",
+        "MUI",
+        "Emotion",
+        "Storybook",
+        "UI-Grid",
+      ],
+    },
+    Languages: {
+      icon: <FileCode2 className="w-4 h-4" />,
+      items: ["JavaScript", "TypeScript", "HTML", "CSS", "SCSS"],
+    },
+    Testing: {
+      icon: <TestTube2 className="w-4 h-4" />,
+      items: [
+        "Jest",
+        "Testing Library",
+        "Cypress",
+        "Cucumber",
+        "Mocha",
+        "Chai",
+        "Sinon",
+        "JSDOM",
+        "Storybook",
+      ],
+    },
+    "Build & Tooling": {
+      icon: <Wrench className="w-4 h-4" />,
+      items: [
+        "Webpack",
+        "Webpack 5",
+        "Babel",
+        "Yarn Workspaces",
+        "Lerna",
+        "Git",
+      ],
+    },
+    Quality: {
+      icon: <ShieldCheck className="w-4 h-4" />,
+      items: ["ESLint", "Prettier", "Stylelint", "Husky", "lint-staged"],
+    },
+    "Libraries & Utilities": {
+      icon: <Database className="w-4 h-4" />,
+      items: [
+        "Axios",
+        "Formik",
+        "Yup",
+        "Lodash",
+        "Moment",
+        "Ramda",
+        "D3",
+        "Polished",
+        "i18next",
+        "react-i18next",
+        "JWT",
+      ],
+    },
   };
 
   return (
-    <div className="max-w-4xl pt-10 pb-20">
-      <h1 className="text-4xl font-bold mb-4">Engineering Stack</h1>
-      <p className={`text-xl mb-12 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Structured view of the tools and systems I use.</p>
+    <div className="animate-fade-in py-10 max-w-5xl">
+      <h2 className="text-2xl font-mono mb-10 pb-2 border-b border-current opacity-80 uppercase tracking-widest ${theme === 'dark' ? 'text-[#00F700]' : 'text-[#cb3131]'}`">
+        / Tech Stack Directory
+      </h2>
 
-      <div className={`font-mono text-sm md:text-base p-8 rounded-xl border shadow-sm overflow-x-auto ${theme === 'dark' ? 'bg-[#0a0a0a] border-gray-800' : 'bg-white border-gray-200'}`}>
-        <div className={`mb-6 font-bold text-lg ${theme === 'dark' ? 'text-[#00F700]' : 'text-green-600'}`}>SYSTEM_STACK</div>
-        
-        {Object.entries(stackData).map(([category, items], catIdx, catArr) => (
-          <div key={category} className="mb-2">
-            <div className={`flex items-center ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}>
-              <span className={`mr-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}>{catIdx === catArr.length - 1 ? '└──' : '├──'}</span>
-              <span className="font-bold">{category}</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {Object.entries(STACK_DATA).map(([category, data], idx) => (
+          <div
+            key={idx}
+            className={`p-6 rounded border border-current border-opacity-10 transition-colors ${isDark ? "bg-white/[0.02] hover:bg-white/[0.04]" : "bg-black/[0.02] hover:bg-black/[0.04]"}`}
+          >
+            <div className="flex items-center gap-3 mb-6 opacity-70">
+              {data.icon}
+              <h3 className="font-mono font-bold tracking-wider uppercase text-sm">
+                {category}
+              </h3>
             </div>
-            <div className="ml-1">
-              <div className={`ml-[11px] border-l-2 ${catIdx === catArr.length - 1 ? 'border-transparent' : (theme === 'dark' ? 'border-gray-800' : 'border-gray-200')} pl-6 py-2`}>
-                {items.map((item, itemIdx, itemArr) => (
-                  <div key={item} className={`flex items-center py-1.5 ${theme === 'dark' ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-900'} transition-colors`}>
-                    <span className={`mr-3 ${theme === 'dark' ? 'text-gray-700' : 'text-gray-300'}`}>{itemIdx === itemArr.length - 1 ? '└──' : '├──'}</span>
-                    <span>{item}</span>
+            <div className="space-y-2 font-mono text-sm flex flex-col">
+              {data.items.map((item, i) => {
+                const isLast = i === data.items.length - 1;
+                return (
+                  <div
+                    key={i}
+                    className="flex items-center group cursor-default"
+                  >
+                    <span className="opacity-30 mr-3 select-none">
+                      {isLast ? "└──" : "├──"}
+                    </span>
+                    <span className="opacity-80 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                      {item}
+                    </span>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
         ))}
