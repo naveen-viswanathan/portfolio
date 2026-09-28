@@ -7,7 +7,7 @@ import {
   Database,
 } from "lucide-react";
 import React from "react";
-import { getTheme } from "../theme/theme";
+import { getTheme, hexToRgba } from "../theme/theme";
 
 export default function Stack({ theme }: { theme: string }) {
   const isDark = theme === "dark";
@@ -82,47 +82,64 @@ export default function Stack({ theme }: { theme: string }) {
   };
 
   return (
-    <div className="animate-fade-in py-10 max-w-5xl">
-      <h2
-        className="text-2xl font-mono mb-10 pb-2 border-b border-current opacity-80 uppercase tracking-widest"
-        style={{ color: themeColors.accent }}
-      >
-        / Tech Stack Directory
-      </h2>
+    <div className="animate-fade-in max-w-5xl w-full mx-auto">
+      <div className="mb-6 md:mb-8 pb-3 border-b border-current opacity-80 flex items-center justify-between">
+        <h2
+          className="text-2xl font-mono uppercase tracking-widest"
+          style={{ color: themeColors.accent }}
+        >
+          / Tech Stack
+        </h2>
+        <span className="text-xs font-mono opacity-50 hidden sm:inline-block">
+          Core toolchain & technologies
+        </span>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
         {Object.entries(STACK_DATA).map(([category, data], idx) => (
           <div
             key={idx}
-            className={`p-6 rounded border border-current border-opacity-10 transition-colors ${
+            className={`p-4 sm:p-5 rounded-xl border transition-all duration-300 flex flex-col ${
               isDark
-                ? "bg-white/[0.02] hover:bg-white/[0.04]"
-                : "bg-black/[0.02] hover:bg-black/[0.04]"
+                ? "bg-[#181818]/90 border-gray-800 hover:border-gray-700 hover:shadow-lg"
+                : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-md"
             }`}
           >
-            <div className="flex items-center gap-3 mb-6 opacity-70">
-              {data.icon}
-              <h3 className="font-mono font-bold tracking-wider uppercase text-sm">
+            <div className="flex items-center gap-2.5 mb-3.5">
+              <span
+                className="p-1.5 rounded-lg shrink-0 flex items-center justify-center"
+                style={{
+                  color: themeColors.accent,
+                  backgroundColor: hexToRgba(themeColors.accent, 0.12),
+                }}
+              >
+                {data.icon}
+              </span>
+              <h3
+                className={`font-mono font-bold tracking-wider uppercase text-xs sm:text-sm ${
+                  isDark ? "text-gray-200" : "text-gray-800"
+                }`}
+              >
                 {category}
               </h3>
+              <span className="ml-auto font-mono text-[11px] text-gray-500 font-medium">
+                {data.items.length}
+              </span>
             </div>
-            <div className="space-y-2 font-mono text-sm flex flex-col">
-              {data.items.map((item, i) => {
-                const isLast = i === data.items.length - 1;
-                return (
-                  <div
-                    key={i}
-                    className="flex items-center group cursor-default"
-                  >
-                    <span className="opacity-30 mr-3 select-none">
-                      {isLast ? "└──" : "├──"}
-                    </span>
-                    <span className="opacity-80 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-                      {item}
-                    </span>
-                  </div>
-                );
-              })}
+
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {data.items.map((item, i) => (
+                <span
+                  key={i}
+                  className={`px-2.5 py-1 rounded-md font-mono text-xs border transition-all duration-200 cursor-default ${
+                    isDark
+                      ? "bg-[#121212] border-gray-800/90 text-gray-300 hover:border-gray-600 hover:text-white"
+                      : "bg-gray-50 border-gray-200 text-gray-700 hover:border-gray-400 hover:text-black"
+                  }`}
+                >
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
         ))}

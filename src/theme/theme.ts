@@ -8,6 +8,9 @@
 // Helper to convert hex to rgba with customizable opacity
 export function hexToRgba(hex: string, alpha: number): string {
   let cleanHex = hex.replace("#", "").trim();
+  if (cleanHex.length === 8) {
+    cleanHex = cleanHex.slice(0, 6);
+  }
   if (cleanHex.length === 3) {
     cleanHex = cleanHex
       .split("")

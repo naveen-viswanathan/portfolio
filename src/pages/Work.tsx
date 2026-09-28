@@ -7,7 +7,7 @@ export default function Work({ theme }: { theme: string }) {
   const themeColors = getTheme(theme);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-12 pb-20">
+    <div className="flex flex-col lg:flex-row gap-12 w-full">
       <div
         className={`w-full lg:w-1/3 flex flex-col border-b lg:border-b-0 lg:border-r ${
           theme === "dark" ? "border-gray-800" : "border-gray-300"

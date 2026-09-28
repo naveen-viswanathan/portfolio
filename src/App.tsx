@@ -45,7 +45,7 @@ export default function App() {
 
   // Reusable sleek divider component using centralized theme colors
   const SectionDivider = () => (
-    <div className="w-full max-w-3xl mx-auto flex items-center justify-center py-16 opacity-70 gap-3">
+    <div className="w-full max-w-3xl mx-auto flex items-center justify-center py-8 md:py-12 opacity-70 gap-3">
       {/* Left fading line */}
       <div
         className="flex-1 h-[1px]"
@@ -97,26 +97,35 @@ export default function App() {
           <div className="max-w-6xl mx-auto px-8 md:px-16">
             <section
               id="home"
-              className="min-h-screen pt-2 md:pt-8 pb-16 flex flex-col justify-center"
+              className="min-h-screen py-12 md:py-16 flex flex-col justify-center"
             >
               <Home theme={theme} />
             </section>
 
             <SectionDivider />
 
-            <section id="work" className="min-h-screen pt-2 md:pt-8 pb-24">
+            <section
+              id="work"
+              className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
+            >
               <Work theme={theme} />
             </section>
 
             <SectionDivider />
 
-            <section id="stack" className="min-h-screen pt-2 md:pt-8 pb-24">
+            <section
+              id="stack"
+              className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
+            >
               <Stack theme={theme} />
             </section>
 
             <SectionDivider />
 
-            <section id="personal" className="min-h-screen pt-2 md:pt-8 pb-24">
+            <section
+              id="personal"
+              className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
+            >
               <Personal />
             </section>
           </div>

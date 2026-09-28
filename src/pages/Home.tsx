@@ -38,13 +38,15 @@ export default function Home({ theme }: { theme: string }) {
 
   return (
     <div
-      className={`w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center text-center md:text-left p-6 sm:p-10 md:p-20 gap-8 sm:gap-12 md:gap-20 rounded-[2.5rem] md:rounded-[3rem] border transition-colors duration-300 ${
+      className={`w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center text-center md:text-left p-6 sm:p-10 md:p-20 gap-8 sm:gap-12 md:gap-20 rounded-[2.5rem] md:rounded-[3rem] border transition-colors duration-300 scale-95 origin-center ${
         theme === "dark"
           ? "bg-[#181818] border-gray-800"
           : "bg-white border-gray-200"
       }`}
       style={{
         boxShadow: `0 0 140px 0 ${themeColors.glow.card}`,
+        transform: "scale(0.95)",
+        transformOrigin: "center",
       }}
     >
       {/* Profile Image */}
