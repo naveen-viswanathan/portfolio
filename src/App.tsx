@@ -76,12 +76,8 @@ export default function App() {
   return (
     <Router>
       <div
-        className={`flex flex-col md:flex-row h-[100dvh] overflow-hidden transition-colors duration-300 ${
-          theme === "dark" ? "bg-[#121212] text-white" : "bg-[#F2F2F2] text-black"
-        }`}
+        className={`flex flex-col md:flex-row h-[100dvh] overflow-hidden transition-colors duration-300 bg-ermine-pattern ${theme === "dark" ? "bg-[#121212] text-white" : "bg-[#F2F2F2] text-black"}`}
       >
-        <CustomCursor theme={theme} />
-
         <Sidebar
           theme={theme}
           setTheme={(t) => setTheme(t as "dark" | "light")}
@@ -94,10 +90,12 @@ export default function App() {
           ref={mainRef}
           className="flex-1 h-full overflow-y-auto scroll-smooth relative"
         >
-          <div className="max-w-6xl mx-auto px-8 md:px-16">
+          {/* Reduced mobile horizontal padding from px-8 to px-4 for a wider card */}
+          <div className="max-w-6xl mx-auto px-4 md:px-16">
+            {/* Added justify-start for mobile, md:justify-center for desktop */}
             <section
               id="home"
-              className="min-h-screen py-12 md:py-16 flex flex-col justify-center"
+              className="min-h-screen pt-4 md:pt-8 pb-16 flex flex-col justify-start md:justify-center"
             >
               <Home theme={theme} />
             </section>
@@ -126,7 +124,7 @@ export default function App() {
               id="personal"
               className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
             >
-              <Personal />
+              <Personal theme={theme} />
             </section>
           </div>
         </main>
