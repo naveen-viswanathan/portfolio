@@ -37,9 +37,9 @@ export const THEME_CONFIG = {
   },
   light: {
     // Primary brand / accent color in Light Mode (e.g. Crimson Red)
-    accent: "#ef9308ff",
+    accent: "rgb(247, 47, 64)",
     // Secondary tone for subtle gradients (e.g. Logo mark)
-    accentSecondary: "#9e2424",
+    accentSecondary: "#e27272",
     // Background tones
     bgBase: "#F2F2F2",
     bgCard: "#ffffff",

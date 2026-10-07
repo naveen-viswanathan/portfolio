@@ -145,7 +145,6 @@ export default function Sidebar({
                 ? "bg-[#1a1a1a] border-gray-700 hover:bg-[#222] text-gray-300"
                 : "bg-gray-50 border-gray-200 hover:bg-gray-100 text-gray-700"
             }`}
-            style={{ cursor: "none" }}
           >
             <div className="flex items-center gap-3">
               <Search size={18} />
