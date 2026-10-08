@@ -76,64 +76,82 @@ export default function App() {
   return (
     <Router>
       <div
-        className={`flex flex-col md:flex-row h-[100dvh] overflow-hidden transition-colors duration-300 bg-ermine-pattern ${theme === "dark" ? "bg-[#121212] text-white" : "bg-[#F2F2F2] text-black"}`}
+        className={`relative flex flex-col md:flex-row h-[100dvh] overflow-hidden transition-colors duration-300 ${
+          theme === "dark"
+            ? "bg-[#131314] text-white"
+            : "bg-[#F2F2F2] text-black"
+        }`}
       >
-        <Sidebar
-          theme={theme}
-          setTheme={(t) => setTheme(t as "dark" | "light")}
-          onOpenSearch={() => setIsSearchOpen(true)}
-          activeSection={activeSection}
-        />
+        {/* Ambient Gemini Blue Glow powered by CSS Variables */}
+        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden">
+          <div
+            className="w-[80vw] h-[40vh] filter blur-[150px] translate-y-1/4 rounded-[100%]"
+            style={{
+              backgroundColor: "var(--bg-glow)",
+              mixBlendMode:
+                "var(--blend-mode)" as React.CSSProperties["mixBlendMode"],
+            }}
+          ></div>
+        </div>
+        {/* Foreground Content Layer */}
+        <div className="relative z-10 flex flex-col md:flex-row w-full h-full">
+          <Sidebar
+            theme={theme}
+            setTheme={(t) => setTheme(t as "dark" | "light")}
+            onOpenSearch={() => setIsSearchOpen(true)}
+            activeSection={activeSection}
+          />
 
-        {/* Main scrollable container */}
-        <main
-          ref={mainRef}
-          className="flex-1 h-full overflow-y-auto scroll-smooth relative"
-        >
-          {/* Reduced mobile horizontal padding from px-8 to px-4 for a wider card */}
-          <div className="max-w-6xl mx-auto px-4 md:px-16">
-            {/* Added justify-start for mobile, md:justify-center for desktop */}
-            <section
-              id="home"
-              className="min-h-screen pt-4 md:pt-8 pb-16 flex flex-col justify-start md:justify-center"
-            >
-              <Home theme={theme} />
-            </section>
+          {/* Main scrollable container */}
+          <main
+            ref={mainRef}
+            className="flex-1 h-full overflow-y-auto scroll-smooth relative"
+          >
+            {/* Reduced mobile horizontal padding from px-8 to px-4 for a wider card */}
+            <div className="max-w-6xl mx-auto px-4 md:px-16">
+              {/* Added justify-start for mobile, md:justify-center for desktop */}
+              <section
+                id="home"
+                className="min-h-screen pt-4 md:pt-8 pb-16 flex flex-col justify-start md:justify-center"
+              >
+                <Home theme={theme} />
+              </section>
 
-            <SectionDivider />
+              <SectionDivider />
 
-            <section
-              id="work"
-              className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
-            >
-              <Work theme={theme} />
-            </section>
+              <section
+                id="work"
+                className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
+              >
+                <Work theme={theme} />
+              </section>
 
-            <SectionDivider />
+              <SectionDivider />
 
-            <section
-              id="stack"
-              className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
-            >
-              <Stack theme={theme} />
-            </section>
+              <section
+                id="stack"
+                className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
+              >
+                <Stack theme={theme} />
+              </section>
 
-            <SectionDivider />
+              <SectionDivider />
 
-            <section
-              id="personal"
-              className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
-            >
-              <Personal theme={theme} />
-            </section>
-          </div>
-        </main>
+              <section
+                id="personal"
+                className="min-h-screen py-16 md:py-20 flex flex-col justify-center"
+              >
+                <Personal theme={theme} />
+              </section>
+            </div>
+          </main>
 
-        <SearchModal
-          isOpen={isSearchOpen}
-          onClose={() => setIsSearchOpen(false)}
-          theme={theme}
-        />
+          <SearchModal
+            isOpen={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+            theme={theme}
+          />
+        </div>
       </div>
     </Router>
   );

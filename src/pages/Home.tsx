@@ -57,12 +57,6 @@ export default function Home({ theme }: { theme: string }) {
   const currentStatus = DATA.profile.status[statusIndex];
   const themeColors = getTheme(theme);
 
-  // Move this above the isBooting check so both returns can use it
-  const cardBg =
-    theme === "dark"
-      ? "bg-[#181818] border-gray-800"
-      : "bg-white border-gray-200";
-
   if (isBooting) {
     return (
       <div className="w-full h-[60vh] flex flex-col items-center justify-center">
@@ -73,9 +67,12 @@ export default function Home({ theme }: { theme: string }) {
           }
         `}</style>
 
-        {/* The New Bento Boot Box */}
         <div
-          className={`flex flex-col justify-center gap-6 w-full max-w-md p-10 md:p-14 rounded-[2.5rem] md:rounded-[3rem] border transition-all duration-300 ${cardBg}`}
+          className={`flex flex-col justify-center gap-6 w-full max-w-md p-10 md:p-14 rounded-[2.5rem] md:rounded-[3rem] border transition-all duration-300 ${
+            theme === "dark"
+              ? "bg-[#1e1f20] border-transparent"
+              : "bg-white border-[#e5e7eb]"
+          }`}
           style={{
             boxShadow: `0 0 60px 10px ${themeColors.accent}20`,
             animation: "fadeIn 0.5s ease-out",
@@ -112,99 +109,157 @@ export default function Home({ theme }: { theme: string }) {
     );
   }
 
+  const cardBg = "bento-card";
+
   return (
     <div
-      className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 px-4 md:px-0 pb-10 md:pb-20"
-      style={{ animation: "fadeIn 0.5s ease-out" }}
+      className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 p-[10px] relative z-10"
+      style={{
+        animation: "fadeIn 0.5s ease-out",
+        boxShadow: "0 0 150px 20px var(--outer-aura)",
+        borderRadius: "3rem",
+      }}
     >
-      {/* 
-        Using !important to ensure Tailwind border colors are overridden on hover.
-        Added translateY to give a nice lift effect.
-      */}
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        
         .bento-card {
+          background-color: ${theme === "dark" ? "#1e1f20" : "#ffffff"} !important;
+          border: 1px solid ${theme === "dark" ? "transparent" : "#e5e7eb"} !important;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          overflow: hidden;
         }
+        
         .bento-card:hover {
-          box-shadow: 0 0 40px 8px ${themeColors.accent}40 !important; 
-          border-color: ${themeColors.accent}A0 !important;
-          transform: translateY(-5px) !important;
+          box-shadow: inset 0px -50px 60px -40px var(--inner-glow), 
+                      0 10px 30px rgba(0,0,0, ${theme === "dark" ? "0.5" : "0.1"}) !important;
+          
+          border-color: var(--border-highlight) !important;
+          transform: translateY(-4px) !important;
         }
       `}</style>
 
       {/* 1. Main Identity Tile (Spans 8 columns) */}
       <div
-        className={`bento-card md:col-span-8 p-8 sm:p-10 md:p-14 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-8 rounded-[2.5rem] md:rounded-[3rem] border ${cardBg}`}
+        className={`${cardBg} md:col-span-8 p-8 sm:p-10 md:p-14 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-8 rounded-[2.5rem] md:rounded-[3rem]`}
       >
         <div className="w-32 h-32 sm:w-40 sm:h-40 shrink-0">
           <img
             src={`${process.env.PUBLIC_URL}/avatar.jpg`}
             alt="Profile"
             className="w-full h-full object-cover rounded-full transition-all duration-300"
-            style={{ filter: `drop-shadow(0 0 20px ${themeColors.accent}80)` }}
+            style={{ filter: `drop-shadow(0 0 20px var(--inner-glow))` }}
           />
         </div>
-        <div className="flex flex-col justify-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 break-words">
+
+        {/* Added min-w-0 and flex-1 to allow long text to shrink and wrap cleanly */}
+        <div className="flex flex-col justify-center min-w-0 flex-1">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2 break-words">
             {DATA.profile.name}
           </h1>
           <h2
-            className={`text-xl md:text-2xl font-light ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
+            className={`text-lg md:text-xl font-light mb-4 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
           >
             {DATA.profile.title}
           </h2>
+
+          {/* Moved Status Component here */}
+          <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
+            <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
+              {currentStatus === "Probably debugging something" ? (
+                <>
+                  {glitchState === "normal" && (
+                    <div className="w-4 h-4 border-[2px] border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                  )}
+                  {glitchState === "green" && (
+                    <div className="w-4 h-4 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>
+                  )}
+                  {glitchState === "red" && (
+                    <div className="w-4 h-4 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444]"></div>
+                  )}
+                </>
+              ) : (
+                <div className="w-4 h-4 border-[2px] border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+              )}
+            </div>
+            <span
+              className={`text-sm md:text-base font-medium whitespace-nowrap ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+            >
+              {currentStatus}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* 2. Status Tile (Spans 4 columns) */}
+      {/* 2. Employment History Tile (Spans 4 columns) */}
       <div
-        className={`bento-card md:col-span-4 p-8 sm:p-10 flex flex-col justify-center items-center md:items-start text-center md:text-left rounded-[2.5rem] md:rounded-[3rem] border ${cardBg}`}
+        className={`${cardBg} md:col-span-4 p-8 sm:p-10 flex flex-col justify-center items-center md:items-start text-center md:text-left rounded-[2.5rem] md:rounded-[3rem]`}
       >
-        <div className="flex items-center gap-3 mb-4 md:mb-6">
-          <div className="relative w-5 h-5 flex items-center justify-center shrink-0">
-            {currentStatus === "Probably debugging something" ? (
-              <>
-                {glitchState === "normal" && (
-                  <div className="w-5 h-5 border-[3px] border-gray-400 border-t-transparent rounded-full animate-spin"></div>
-                )}
-                {glitchState === "green" && (
-                  <div
-                    className="w-5 h-5 rounded-full"
-                    style={{ backgroundColor: themeColors.accent }}
-                  ></div>
-                )}
-                {glitchState === "red" && (
-                  <div className="w-5 h-5 bg-red-500 rounded-full"></div>
-                )}
-              </>
-            ) : (
-              <div className="w-5 h-5 border-[3px] border-gray-400 border-t-transparent rounded-full animate-spin"></div>
-            )}
-          </div>
-          <h3
-            className={`text-sm font-bold tracking-widest uppercase ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
-          >
-            Status
-          </h3>
-        </div>
+        <h3
+          className={`text-sm font-bold tracking-widest uppercase mb-6 ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
+        >
+          Experience
+        </h3>
 
-        {/* Added fixed min-height and whitespace-nowrap to prevent layout jumping */}
-        <div className="w-full flex items-center justify-center md:justify-start min-h-[3.5rem] md:min-h-[4.5rem]">
-          <span
-            className={`whitespace-nowrap text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium leading-tight ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}
-          >
-            {currentStatus}
-          </span>
+        <div className="flex flex-col gap-5 w-full">
+          {/* Current Company */}
+          <div className="flex items-center justify-center md:justify-start gap-4">
+            <div
+              className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-sm ${theme === "dark" ? "bg-[#111] border border-gray-800" : "bg-gray-50 border border-gray-200"}`}
+            >
+              <span
+                className={`font-bold text-sm ${theme === "dark" ? "text-white" : "text-black"}`}
+              >
+                CSG
+              </span>
+            </div>
+            <div className="flex flex-col min-w-0 text-left">
+              <span
+                className={`font-medium truncate ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}
+              >
+                CSG Systems
+              </span>
+              <span
+                className={`text-xs md:text-sm ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
+              >
+                2019 - Present
+              </span>
+            </div>
+          </div>
+
+          {/* Past Company */}
+          <div className="flex items-center justify-center md:justify-start gap-4">
+            <div
+              className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-sm ${theme === "dark" ? "bg-[#111] border border-gray-800" : "bg-gray-50 border border-gray-200"}`}
+            >
+              <span
+                className={`font-bold text-sm ${theme === "dark" ? "text-white" : "text-black"}`}
+              >
+                W
+              </span>
+            </div>
+            <div className="flex flex-col min-w-0 text-left">
+              <span
+                className={`font-medium truncate ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}
+              >
+                Wipro
+              </span>
+              <span
+                className={`text-xs md:text-sm ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
+              >
+                2014-2019
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* 3. Tech Focus Tile (Spans 6 columns) */}
       <div
-        className={`bento-card md:col-span-6 p-8 sm:p-10 flex flex-col justify-center items-center md:items-start rounded-[2.5rem] md:rounded-[3rem] border ${cardBg}`}
+        className={`${cardBg} md:col-span-6 p-8 sm:p-10 flex flex-col justify-center items-center md:items-start rounded-[2.5rem] md:rounded-[3rem]`}
       >
         <h3
           className={`text-sm font-bold tracking-widest uppercase mb-6 ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
@@ -230,7 +285,7 @@ export default function Home({ theme }: { theme: string }) {
 
       {/* 4. Location Tile (Spans 3 columns) */}
       <div
-        className={`bento-card md:col-span-3 p-8 sm:p-10 flex flex-col items-center justify-center text-center rounded-[2.5rem] md:rounded-[3rem] border ${cardBg}`}
+        className={`${cardBg} md:col-span-3 p-8 sm:p-10 flex flex-col items-center justify-center text-center rounded-[2.5rem] md:rounded-[3rem]`}
       >
         <svg
           width="32"
@@ -261,7 +316,7 @@ export default function Home({ theme }: { theme: string }) {
 
       {/* 5. Social Grid Tile (Spans 3 columns) */}
       <div
-        className={`bento-card md:col-span-3 p-6 sm:p-8 grid grid-cols-2 gap-4 rounded-[2.5rem] md:rounded-[3rem] border ${cardBg}`}
+        className={`${cardBg} md:col-span-3 p-6 sm:p-8 grid grid-cols-2 gap-4 rounded-[2.5rem] md:rounded-[3rem]`}
       >
         {[
           {
